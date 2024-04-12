@@ -97,10 +97,14 @@ export_env_vars
 
 execute_script "/post_start.sh" "Running post-start script..."
 
+echo "Installing BlackMamba - this can take some time"
+
 cd /ml_workspace/BlackMamba && pip install .
 
-echo "Runing server....."
+echo "Starting server....."
 
 uvicorn main:app --reload --host 0.0.0.0
+
+echo "Ready."
 
 sleep infinity

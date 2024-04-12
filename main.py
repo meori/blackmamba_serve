@@ -1,5 +1,6 @@
 from typing import Union
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 
 from mamba_model import MambaModel
@@ -18,8 +19,14 @@ class Request(BaseModel):
 
 
 @app.get("/")
+async def redirect():
+    return RedirectResponse(url='/docs')
+  
+@app.get("/predict")
 def predict_root(q: Union[str, None] = None):
     input_text = q
+    if input_text is None:
+        return {"error": "text is empty"}
     input_ids = tokenizer.encode(input_text, return_tensors="pt").cuda()
 
     with torch.no_grad():
@@ -33,6 +40,8 @@ def predict_root(q: Union[str, None] = None):
 @app.post("/predict")
 def predict_next(request: Request):
     input_text = request.text
+    if input_text is None:
+        return {"error": "text is empty"}
     input_ids = tokenizer.encode(input_text, return_tensors="pt").cuda()
 
     with torch.no_grad():
