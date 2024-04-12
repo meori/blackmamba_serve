@@ -19,11 +19,14 @@ RUN git clone https://huggingface.co/Zyphra/BlackMamba-2.8B || true
 #RUN git clone https://huggingface.co/EleutherAI/gpt-neox-20b
 
 RUN pip install torch packaging
+RUN pip install einops transformers
 # RUN cd BlackMamba && pip install .
 
 RUN pip install fastapi "uvicorn[standard]"
 
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
+
+COPY ./main.py /ml_workspace/BlackMamba/main.py
 
 CMD ["/start.sh"]

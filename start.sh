@@ -98,8 +98,9 @@ export_env_vars
 execute_script "/post_start.sh" "Running post-start script..."
 
 cd /ml_workspace/BlackMamba && pip install .
-cd /
 
-echo "Start script(s) finished, pod is ready to use."
+echo "Runing server....."
+
+uvicorn main:app --reload --host 0.0.0.0
 
 sleep infinity
