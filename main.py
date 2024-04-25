@@ -77,7 +77,7 @@ def predict_next_from_q(q: Union[str, None] = None):
         return {"error": str(e)}
 
 @app.post("/predict")
-def predict_next(request: Request):
+def predict_next_from_post(request: Request):
     try:
         input_text = request.content
         predicted_token = predict_next(input_text)
